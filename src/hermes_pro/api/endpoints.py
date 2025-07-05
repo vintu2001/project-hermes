@@ -1,16 +1,26 @@
 from fastapi import APIRouter, HTTPException
-from hermes_pro.models.pydantic_models import QueryRequest, QueryResponse
-# We will import the engine later
-# from hermes_pro.core.rag_engine import query_engine
+from ..models.pydantic_models import QueryRequest, QueryResponse
+# We now import our powerful code agent
+from ..core.rag_engine import code_agent
 
 router = APIRouter()
 
 @router.post("/query", response_model=QueryResponse)
 def handle_query(query_request: QueryRequest):
+    """
+    This endpoint now receives a query and passes it to our Code Agent.
+    """
     print(f"API received query: '{query_request.query}'")
+    
+    try:
+        # Pass the user's query directly to the agent's chat method
+        agent_response = code_agent.chat(query_request.query)
+        
+        # The agent's response is an object, we convert it to a string for the answer
+        answer = str(agent_response)
 
-    # This is where we will call the real RAG engine
-    # For now, we will keep the dummy response
-    dummy_answer = f"I received your question: '{query_request.query}'. My brain is being re-wired!"
-
-    return QueryResponse(answer=dummy_answer)
+        return QueryResponse(answer=answer)
+        
+    except Exception as e:
+        print(f"[ERROR] An error occurred in the agent: {e}")
+        raise HTTPException(status_code=500, detail="An error occurred while processing the query with the AI agent.")

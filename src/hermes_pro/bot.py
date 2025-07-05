@@ -1,16 +1,15 @@
-# bot.py - The new Discord version
-
 import os
 import discord
 import requests
 from dotenv import load_dotenv
+from .config import DISCORD_BOT_TOKEN
 
 # Load environment variables from .env file
 load_dotenv()
 DISCORD_BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
 
 # FastAPI backend URL
-API_ENDPOINT = "http://127.0.0.1:8000/query"
+API_ENDPOINT = "http://127.0.0.1:8000/api/v1/query"
 
 # --- Discord Bot Setup ---
 # Intents are like permissions. We need to specify what our bot needs to do.
