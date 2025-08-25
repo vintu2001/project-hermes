@@ -1,2 +1,18 @@
+# Core FastAPI Server
 fastapi
 uvicorn[standard]
+
+# Environment & API Calls
+python-dotenv
+requests
+
+# Discord Bot Interface
+discord.py
+
+# RAG Engine & AI Components
+llama-index
+llama-index-llms-ollama
+llama-index-embeddings-huggingface
+llama-index-vector-stores-chroma
+sentence-transformers
+chromadb
